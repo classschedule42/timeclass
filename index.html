@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>ตารางเรียน</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -16,16 +17,24 @@
 </head>
 <body>
 
-  <img id="scheduleImage" src="0.png" alt="ตารางเรียน">
+  <div id="imageContainer" data-aos="zoom-out">
+    <img id="scheduleImage" src="0.png" alt="ตารางเรียน">
+  </div>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
+    AOS.init();
+
     const imageElement = document.getElementById("scheduleImage");
+    const imageContainer = document.getElementById("imageContainer");
 
     const periods = [
       "08:40", "09:35", "10:30", "11:25",
       "12:20", "13:15", "14:10", "15:05",
       "16:00"
     ];
+
+    let previousIndex = -1;
 
     function getImageIndexFromDate(date) {
       const day = date.getDay();
@@ -63,7 +72,16 @@
     function updateImage() {
       const now = new Date();
       const imgIndex = getImageIndexFromDate(now);
-      imageElement.src = `${imgIndex}.png`;
+
+      if (imgIndex !== previousIndex) {
+        imageElement.src = `${imgIndex}.png`;
+        previousIndex = imgIndex;
+
+        imageContainer.setAttribute("data-aos", "zoom-out");
+        imageContainer.classList.remove("aos-animate");
+        void imageContainer.offsetWidth;
+        imageContainer.classList.add("aos-animate");
+      }
     }
 
     updateImage();
