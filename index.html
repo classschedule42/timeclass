@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>ตารางเรียนและตารางเวร</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       background-color: #f9efd6;
       font-family: sans-serif;
       line-height: 1.4;
     }
-
     #homeworkButton {
       position: fixed;
       top: 20px;
@@ -26,10 +22,21 @@
       border: none;
       cursor: pointer;
     }
-
     #homeworkButton img {
       width: 50px;
       height: 50px;
+    }
+    /* เรืองแสงสีแดง */
+    .glow-red {
+      animation: glowRed 1.5s infinite alternate;
+    }
+    @keyframes glowRed {
+      from {
+        filter: drop-shadow(0 0 5px red) drop-shadow(0 0 10px red);
+      }
+      to {
+        filter: drop-shadow(0 0 20px red) drop-shadow(0 0 30px red);
+      }
     }
 
     #homeworkSidebar {
@@ -46,15 +53,8 @@
       overflow-y: auto;
       z-index: 999;
     }
-
-    #homeworkSidebar.open {
-      right: 0;
-    }
-
-    #homeworkSidebar h3 {
-      margin-top: 0;
-    }
-
+    #homeworkSidebar.open { right: 0; }
+    #homeworkSidebar h3 { margin-top: 0; }
     .homeworkItem {
       background-color: #f0f0f0;
       padding: 10px;
@@ -63,65 +63,44 @@
       font-size: 14px;
     }
 
-#imageContainer {
-  width: 140%;
-  max-width: none;
-  margin-left: 10%;
-  overflow: visible;
-}
+    #imageContainer {
+      width: 140%;
+      max-width: none;
+      margin-left: 10%;
+      overflow: visible;
+    }
 
-#scheduleImage {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-#dutySection {
-  padding: 15px;
-  margin-left: 10%;        /* ขยับไปทางขวาให้เท่ารูป */
-  width: 140%;             /* กว้างเท่ารูป */
-  max-width: none;
-}
-
-.table-wrapper {
-  overflow-x: auto;
-  width: 100%;             /* ให้ขยายตาม #dutySection */
-}
-
-#dutySection table {
-  width: 100%;             /* ตารางเต็ม container */
-  font-size: 16px;         /* ตัวอักษรใหญ่ขึ้น */
-  border-collapse: collapse;
-  background: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-#dutySection th,
-#dutySection td {
-  border: 1px solid #ccc;
-  text-align: left;
-  padding: 12px 16px;     /* ขนาด cell ใหญ่ขึ้น */
-}
-
-
-    table {
+    #scheduleImage {
       width: 100%;
-      min-width: 400px;
+      height: auto;
+      display: block;
+    }
+
+    #dutySection {
+      padding: 15px;
+      margin-left: 10%;
+      width: 140%;
+      max-width: none;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    #dutySection table {
+      width: 100%;
+      font-size: 16px;
       border-collapse: collapse;
       background: white;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    th, td {
+    #dutySection th,
+    #dutySection td {
       border: 1px solid #ccc;
       text-align: left;
-      padding: 10px;
-      font-size: 14px;
-    }
-
-    th {
-      background-color: #333;
-      color: white;
+      padding: 12px 16px;
     }
 
     .clickable-number {
@@ -168,17 +147,19 @@
 </head>
 <body>
 
-  <button id="homeworkButton">
-    <img src="icon.png" alt="Homework Icon">
+  <!-- ใส่คลาส glow-red เข้าไปที่ปุ่มนี้ -->
+  <button id="homeworkButton" class="glow-red">
+    <img src="icon.png" alt="Homework Icon" />
   </button>
 
   <div id="homeworkSidebar">
     <h3>📚 ข้อมูลงาน</h3>
     <div id="homeworkList"></div>
+    <!-- ลบฟอร์มเพิ่มการบ้านออก -->
   </div>
 
   <div id="imageContainer" data-aos="zoom-out">
-    <img id="scheduleImage" src="0.png" alt="ตารางเรียน">
+    <img id="scheduleImage" src="0.png" alt="ตารางเรียน" />
   </div>
 
   <div id="dutySection">
@@ -208,7 +189,6 @@
     function getImageIndexFromDate(date) {
       const day = date.getDay();
       const currentMinutes = date.getHours() * 60 + date.getMinutes();
-
       if (day === 0 || day === 6) return 0;
       if (currentMinutes < 8 * 60 + 40) return 0;
 
@@ -223,7 +203,6 @@
           periodIndex = i;
         }
       }
-
       return periodIndex === -1 ? 0 : ((day - 1) * 10) + (periodIndex + 1);
     }
 
@@ -251,7 +230,7 @@
       "วันศุกร์": [2, 3, 6, 14, 24, 36, 38, 40]
     };
 
-    const nameMap = {
+     const nameMap = {
       1: "1.นาย การิน ชื่นวิทยา", 2: "2.นาย เจษฎา ใจน้อย", 3: "3.นาย ณัฐกร มูลสมบัติ",
       4: "4.นาย นพคุณ รุนสำโรง", 5: "5.นาย ปุณวัฒน์ กมลช่วง", 6: "6.นาย พีษณุ ศรีพันธ์ชาติ",
       7: "7.นาย วีรภาพ มูลศรี", 8: "8.นาย วุฒิพงษ์ พิมพ์ทอง", 9: "9.นาย ศิริโชติ วรรณา",
