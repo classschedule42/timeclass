@@ -22,21 +22,23 @@
       border: none;
       cursor: pointer;
     }
-    #homeworkButton img {
-      width: 50px;
-      height: 50px;
-    }
-    .glow-red {
-      animation: glowRed 1.5s infinite alternate;
-    }
-    @keyframes glowRed {
-      from {
-        filter: drop-shadow(0 0 5px red) drop-shadow(0 0 10px red);
-      }
-      to {
-        filter: drop-shadow(0 0 20px red) drop-shadow(0 0 30px red);
-      }
-    }
+#homeworkButton img {
+  width: 30px;   /* ลดขนาดไอคอน */
+  height: 30px;
+}
+
+.glow-red {
+  animation: glowRed 1.5s infinite alternate;
+}
+
+@keyframes glowRed {
+  from {
+    filter: drop-shadow(0 0 2px red) drop-shadow(0 0 5px red);  /* ลดความแรงแสง */
+  }
+  to {
+    filter: drop-shadow(0 0 10px red) drop-shadow(0 0 15px red);
+  }
+}
 
     #homeworkSidebar {
       position: fixed;
