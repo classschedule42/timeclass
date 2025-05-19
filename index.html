@@ -6,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       background-color: #f9efd6;
@@ -44,8 +47,13 @@
       z-index: 999;
     }
 
-    #homeworkSidebar.open { right: 0; }
-    #homeworkSidebar h3 { margin-top: 0; }
+    #homeworkSidebar.open {
+      right: 0;
+    }
+
+    #homeworkSidebar h3 {
+      margin-top: 0;
+    }
 
     .homeworkItem {
       background-color: #f0f0f0;
@@ -73,12 +81,18 @@
     }
 
     @media (max-width: 767px) {
-      #scheduleImage { transform: rotate(90deg); }
+      #scheduleImage {
+        transform: rotate(90deg);
+      }
     }
 
-    #dutySection { padding: 15px; }
+    #dutySection {
+      padding: 15px;
+    }
 
-    .table-wrapper { overflow-x: auto; }
+    .table-wrapper {
+      overflow-x: auto;
+    }
 
     table {
       width: 100%;
@@ -110,7 +124,9 @@
       font-size: 14px;
     }
 
-    .clickable-number:hover { background-color: #ddd; }
+    .clickable-number:hover {
+      background-color: #ddd;
+    }
 
     .today { background-color: #a4f9a4 !important; }
     .tomorrow { background-color: #fff48f !important; }
@@ -182,6 +198,7 @@
     function getImageIndexFromDate(date) {
       const day = date.getDay();
       const currentMinutes = date.getHours() * 60 + date.getMinutes();
+
       if (day === 0 || day === 6) return 0;
       if (currentMinutes < 8 * 60 + 40) return 0;
 
@@ -240,6 +257,7 @@
       37: "37.นางสาว ณฐพัชร อักษรสาร", 38: "38.นางสาว ใจทิพย์ คำบุญเกิด", 39: "39.นางสาว พริสร ใจกล้า",
       40: "40.นางสาว วรรณธกาญณ์ สุทธิเทพา"
     };
+
     function createDutyTable() {
       const tbody = document.getElementById("duty-table");
       const now = new Date();
@@ -281,7 +299,7 @@
         subject: "วิชา : ภาษาไทย",
         description: "เขียนเรียงความตอนปิดเทอมถึงเปิดเทอมแล้วอนาคตที่อยากเป็น",
         dueDate: "2025-05-16T14:47:04"
-      }
+      },
     ];
 
     function renderHomework() {
