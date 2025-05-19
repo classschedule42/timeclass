@@ -64,16 +64,19 @@
     }
 
 #imageContainer {
-  max-width: 130vw;
-  overflow-x: hidden; 
+  max-width: 100vw; /* จำกัดไม่ให้เกินหน้าจอแนวนอน */
+  overflow-x: hidden; /* ซ่อนส่วนที่เกิน */
+  position: relative;
 }
 
 #scheduleImage {
-  max-width: 140%;  
-  max-height: 90vh;
-  display: block;
-  margin-left: 10%;
+  width: 100%;       /* ให้พอดีกับ container */
+  max-width: 100%;   /* ไม่ให้เกิน */
   height: auto;
+  transform: scale(1.4);  /* ขยายขนาดรูป 1.4 เท่า */
+  transform-origin: left center; /* ขยายจากฝั่งซ้าย */
+  margin-left: 10%;  /* เลื่อนไปขวา 10% */
+  display: block;
 }
 
 
