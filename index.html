@@ -26,7 +26,6 @@
       width: 50px;
       height: 50px;
     }
-    /* เรืองแสงสีแดง */
     .glow-red {
       animation: glowRed 1.5s infinite alternate;
     }
@@ -63,25 +62,28 @@
       font-size: 14px;
     }
 
-    #imageContainer {
-      width: 140%;
-      max-width: none;
-      margin-left: 10%;
-      overflow: visible;
-    }
+#imageContainer {
+  width: 100%;      /* ไม่ต้องขยายเกินขนาดหน้าจอ */
+  max-width: 800px; /* กำหนดขนาดสูงสุด */
+  margin: 0 auto;   /* กึ่งกลาง */
+  overflow: visible;
+}
 
-    #scheduleImage {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+#scheduleImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-    #dutySection {
-      padding: 15px;
-      margin-left: 10%;
-      width: 140%;
-      max-width: none;
-    }
+#dutySection {
+  padding: 15px;
+  margin: 20px auto; /* เว้นระยะ และกึ่งกลาง */
+  width: 100%;
+  max-width: 800px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
 
     .table-wrapper {
       overflow-x: auto;
@@ -111,6 +113,7 @@
       margin: 2px;
       border-radius: 5px;
       font-size: 14px;
+      transition: background-color 0.3s ease;
     }
 
     .clickable-number:hover {
@@ -147,15 +150,13 @@
 </head>
 <body>
 
-  <!-- ใส่คลาส glow-red เข้าไปที่ปุ่มนี้ -->
-  <button id="homeworkButton" class="glow-red">
+  <button id="homeworkButton" class="glow-red" aria-label="เปิดข้อมูลงานการบ้าน">
     <img src="icon.png" alt="Homework Icon" />
   </button>
 
-  <div id="homeworkSidebar">
+  <div id="homeworkSidebar" role="complementary" aria-hidden="true">
     <h3>📚 ข้อมูลงาน</h3>
-    <div id="homeworkList"></div>
-    <!-- ลบฟอร์มเพิ่มการบ้านออก -->
+    <div id="homeworkList" aria-live="polite"></div>
   </div>
 
   <div id="imageContainer" data-aos="zoom-out">
@@ -189,7 +190,7 @@
     function getImageIndexFromDate(date) {
       const day = date.getDay();
       const currentMinutes = date.getHours() * 60 + date.getMinutes();
-      if (day === 0 || day === 6) return 0;
+      if (day === 0 || day === 6) return 0; // วันอาทิตย์และเสาร์
       if (currentMinutes < 8 * 60 + 40) return 0;
 
       const timesInMinutes = periods.map(time => {
@@ -230,7 +231,7 @@
       "วันศุกร์": [2, 3, 6, 14, 24, 36, 38, 40]
     };
 
-     const nameMap = {
+    const nameMap = {
       1: "1.นาย การิน ชื่นวิทยา", 2: "2.นาย เจษฎา ใจน้อย", 3: "3.นาย ณัฐกร มูลสมบัติ",
       4: "4.นาย นพคุณ รุนสำโรง", 5: "5.นาย ปุณวัฒน์ กมลช่วง", 6: "6.นาย พีษณุ ศรีพันธ์ชาติ",
       7: "7.นาย วีรภาพ มูลศรี", 8: "8.นาย วุฒิพงษ์ พิมพ์ทอง", 9: "9.นาย ศิริโชติ วรรณา",
@@ -249,6 +250,7 @@
 
     function createDutyTable() {
       const tbody = document.getElementById("duty-table");
+      tbody.innerHTML = ""; // เคลียร์ก่อนสร้างใหม่
       const now = new Date();
       const todayIndex = now.getDay();
       const dutyDays = Object.keys(dutyData);
@@ -270,7 +272,8 @@
           btn.textContent = num;
           btn.className = "clickable-number";
           btn.addEventListener("click", () => {
-            btn.textContent = isNaN(btn.textContent) ? num : nameMap[num] || `ชื่อ ${num}`;
+            // สลับระหว่างแสดงเลขกับชื่อ
+            btn.textContent = isNaN(btn.textContent) ? num : (nameMap[num] || `ชื่อ ${num}`);
           });
           numbersCell.appendChild(btn);
         });
@@ -283,6 +286,7 @@
 
     createDutyTable();
 
+    // ข้อมูลการบ้าน (ใส่ตรงนี้ถ้าจะเพิ่มโดยโค้ด)
     const homeworkData = [
       {
         subject: "วิชา : ภาษาไทย",
@@ -302,14 +306,16 @@
       });
     }
 
+    renderHomework();
+
     const homeworkBtn = document.getElementById("homeworkButton");
     const sidebar = document.getElementById("homeworkSidebar");
 
     homeworkBtn.addEventListener("click", () => {
       sidebar.classList.toggle("open");
+      // aria-hidden ปรับให้ถูกต้องเพื่อช่วยเรื่อง accessibility
+      sidebar.setAttribute("aria-hidden", !sidebar.classList.contains("open"));
     });
-
-    renderHomework();
   </script>
 </body>
 </html>
